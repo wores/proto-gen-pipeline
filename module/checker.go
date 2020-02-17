@@ -31,8 +31,8 @@ func (m *Module) CheckRules(msg pgs.Message) {
 	for _, f := range msg.Fields() {
 		m.Push(f.Name().String())
 
-		var rules pipeline.FieldTasks
-		_, err := f.Extension(pipeline.E_Tasks, &rules)
+		var rules pipeline.FieldProcesses
+		_, err := f.Extension(pipeline.E_Processes, &rules)
 		m.CheckErr(err, "unable to read validation rules from field")
 
 		//if rules.GetMessage() != nil {
@@ -46,16 +46,16 @@ func (m *Module) CheckRules(msg pgs.Message) {
 	}
 }
 
-func (m *Module) CheckFieldRules(typ FieldType, rules *pipeline.FieldTasks) {
+func (m *Module) CheckFieldRules(typ FieldType, rules *pipeline.FieldProcesses) {
 	if rules == nil {
 		return
 	}
 
 	switch r := rules.Type.(type) {
-	case *pipeline.FieldTasks_String_:
+	case *pipeline.FieldProcesses_String_:
 		m.MustType(typ, pgs.StringT, pgs.StringValueWKT)
 		m.CheckString(r.String_)
-	case *pipeline.FieldTasks_Repeated:
+	case *pipeline.FieldProcesses_Repeated:
 		m.CheckRepeated(typ, r.Repeated)
 	//case *validate.FieldRules_Map:
 	//	m.CheckMap(typ, r.Map)
@@ -84,7 +84,7 @@ func (m *Module) MustType(typ FieldType, pt pgs.ProtoType, wrapper pgs.WellKnown
 	)
 }
 
-func (m *Module) CheckString(r *pipeline.StringTasks) {
+func (m *Module) CheckString(r *pipeline.StringProcesses) {
 	if r.ForceHoge != nil && *r.ForceHoge {
 
 	}
@@ -107,7 +107,7 @@ func (m *Module) CheckString(r *pipeline.StringTasks) {
 	//}
 }
 
-func (m *Module) CheckRepeated(ft FieldType, r *pipeline.RepeatedTasks) {
+func (m *Module) CheckRepeated(ft FieldType, r *pipeline.RepeatedProcesses) {
 	typ := m.mustFieldType(ft)
 
 	m.Assert(typ.IsRepeated(), "field is not repeated but got repeated rules")

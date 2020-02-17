@@ -15,7 +15,7 @@ import (
 type RuleContext struct {
 	Field        pgs.Field
 	Rules        proto.Message
-	MessageRules *pipeline.MessageTasks
+	MessageRules *pipeline.MessageProcesses
 	Gogo         Gogo
 
 	Typ        string
@@ -41,8 +41,8 @@ func rulesContext(f pgs.Field) (out RuleContext, err error) {
 	//f.Extension(gogoproto.E_Stdduration, &out.Gogo.StdDuration)
 	//f.Extension(gogoproto.E_Stdtime, &out.Gogo.StdTime)
 
-	var rules pipeline.FieldTasks
-	if _, err = f.Extension(pipeline.E_Tasks, &rules); err != nil {
+	var rules pipeline.FieldProcesses
+	if _, err = f.Extension(pipeline.E_Processes, &rules); err != nil {
 		return
 	}
 
@@ -67,9 +67,9 @@ func (ctx RuleContext) Elem(name, idx, property string) (out RuleContext, err er
 	out.PropertyOverride = fmt.Sprintf("%s[%s]", property, idx)
 	out.Gogo = ctx.Gogo
 
-	var rules *pipeline.FieldTasks
+	var rules *pipeline.FieldProcesses
 	switch r := ctx.Rules.(type) {
-	case *pipeline.RepeatedTasks:
+	case *pipeline.RepeatedProcesses:
 		rules = r.GetItems()
 	default:
 		err = fmt.Errorf("cannot get Elem RuleContext from %T", ctx.Field)
@@ -114,20 +114,20 @@ func Render(tpl *template.Template) func(ctx RuleContext) (string, error) {
 	}
 }
 
-func resolveRules(typ interface{ IsEmbed() bool }, rules *pipeline.FieldTasks) (
+func resolveRules(typ interface{ IsEmbed() bool }, rules *pipeline.FieldProcesses) (
 	ruleType string,
 	rule proto.Message,
-	messageRule *pipeline.MessageTasks,
+	messageRule *pipeline.MessageProcesses,
 	wrapped bool,
 ) {
 	switch r := rules.GetType().(type) {
-	case *pipeline.FieldTasks_String_:
+	case *pipeline.FieldProcesses_String_:
 		ruleType, rule, wrapped = "string", r.String_, typ.IsEmbed()
-	case *pipeline.FieldTasks_Repeated:
+	case *pipeline.FieldProcesses_Repeated:
 		ruleType, rule, wrapped = "repeated", r.Repeated, false
 	case nil:
 		if ft, ok := typ.(pgs.FieldType); ok && ft.IsRepeated() {
-			return "repeated", &pipeline.RepeatedTasks{}, rules.GetMessage(), false
+			return "repeated", &pipeline.RepeatedProcesses{}, rules.GetMessage(), false
 		} else if typ.IsEmbed() {
 			return "message", rules.GetMessage(), rules.GetMessage(), false
 		}

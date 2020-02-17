@@ -9,40 +9,38 @@ import "google/protobuf/wrappers.proto";
 import "pipeline/pipeline.proto";
 
 message Example {
-  string text = 1 [
-    (pipeline.tasks).string.trim = TrimTypeBoth
-  ];
+  string text = 1 [(pipeline.processes).string.trim = TrimTypeBoth];
   google.protobuf.StringValue wrapText = 2 [
-    (pipeline.tasks).string = {
+    (pipeline.processes).string = {
       trim: TrimTypeBoth
     }
   ];
   repeated string texts = 3 [
-    (pipeline.tasks).repeated.items.string = {
+    (pipeline.processes).repeated.items.string = {
       trim: TrimTypeBoth
     }
   ];
   message Inner {
     string text = 1 [
-      (pipeline.tasks).string = {
+      (pipeline.processes).string = {
         trim: TrimTypeBoth
       }
     ];
     google.protobuf.StringValue wrapText = 2 [
-      (pipeline.tasks).string = {
+      (pipeline.processes).string = {
         trim: TrimTypeBoth
       }
     ];
     repeated string texts = 3 [
-      (pipeline.tasks).repeated.items.string = {
+      (pipeline.processes).repeated.items.string = {
         trim: TrimTypeBoth
       }
     ];
     Inner inner = 4;
   }
   Inner inner = 4;
-  //  string trimStr = 3 [(pipeline.tasks).string.trim = true];
-  //  google.protobuf.StringValue wrapTrimStr = 4 [(pipeline.tasks).string.trim = true];
+  //  string trimStr = 3 [(pipeline.processes).string.trim = true];
+  //  google.protobuf.StringValue wrapTrimStr = 4 [(pipeline.processes).string.trim = true];
   //    string with_new_multiple = 2 [(tagger.tags) = "graphql:\"withNewTags,optional\" xml:\"multi,omitempty\"" ];
 
   //    string replace_default = 3 [(tagger.tags) = "json:\"replacePrevious\""] ;

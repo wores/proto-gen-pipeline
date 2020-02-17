@@ -9,7 +9,7 @@ import "google/protobuf/descriptor.proto";
 // Tags are applied at the field level
 extend google.protobuf.FieldOptions {
   // Multiple Tags can be spcified.
-  optional FieldTasks tasks = 27063;
+  optional FieldProcesses processes = 27063;
 }
 
 //extend google.protobuf.OneofOptions {
@@ -17,27 +17,27 @@ extend google.protobuf.FieldOptions {
 //    string oneof_tags = 847939;
 //}
 
-message FieldTasks {
-  optional MessageTasks message = 1;
+message FieldProcesses {
+  optional MessageProcesses message = 1;
   oneof type {
-    StringTasks string = 2;
-    RepeatedTasks repeated = 3;
+    StringProcesses string = 2;
+    RepeatedProcesses repeated = 3;
   }
 }
 
-message StringTasks {
+message StringProcesses {
   optional bool forceHoge = 1;
   optional TrimType trim = 2;
 }
 
-message RepeatedTasks {
+message RepeatedProcesses {
   // Items specifies the contraints to be applied to each item in the field.
   // Repeated message fields will still execute validation against each item
   // unless skip is specified here.
-  optional FieldTasks items = 1;
+  optional FieldProcesses items = 1;
 }
 
-message MessageTasks {
+message MessageProcesses {
   // Skip specifies that the validation rules of this field should not be
   // evaluated
   optional bool skip = 1;
