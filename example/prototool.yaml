@@ -1,0 +1,40 @@
+protoc:
+  # Additional paths to include with -I to protoc.
+  # By default, the directory of the config file is included,
+  # or the current directory if there is no config file.
+  includes:
+    - ../
+    - ../vendor
+    - ../pipeline
+#    - ../vendor/github.com/gogo/protobuf/gogoproto
+
+  # If not set, compile will fail if there are unused imports.
+  # Setting this will ignore unused imports.
+  allow_unused_imports: false
+
+lint:
+  group: google
+  #file_header:
+  #  path: ./LICENSE
+
+generate:
+  go_options:
+    import_path: github.com/wores/protoc-gen-pipeline/example
+  plugins:
+    - name: go
+      type: go
+      flags: plugins=grpc
+      output: ../gen/go
+    - name: pipeline
+      type: go
+      flags: lang=go
+      output: ../gen/go
+#    - name: gogo
+#      type: gogo
+#      flags: paths=import,plugins=grpc
+#      output: ../gen/go
+#    - name: pipeline
+#      type: gogo
+#      flags: lang=gogo
+#      output: ../gen/go
+

@@ -1,0 +1,36 @@
+version: '2'
+
+tasks:
+  protogen:
+    desc: Generate pb files.
+    cmds:
+      - prototool format -w ./{{ .DIR }}
+      - prototool generate ./{{ .DIR }}
+      - cp -r ./gen/go/github.com/wores/protoc-gen-pipeline/{{ .DIR }}/* ./{{ .DIR }}
+      - rm -rf ./gen
+    vars:
+      DIR: pipeline
+
+  try:
+    desc: Generate pb files.
+    cmds:
+      - go build -o protoc-gen-pipeline main.go
+      - mv protoc-gen-pipeline $GOPATH/bin/
+      - prototool format -w ./{{ .DIR }}
+#      - prototool generate ./{{ .DIR }}
+      - mkdir -p gen/go
+      - protoc --proto_path=. --proto_path=vendor --proto_path=vendor/github.com/gogo/protobuf/gogoproto/ --proto_path=pipeline --gogo_out=paths=import,plugins=grpc:./gen/go --pipeline_out=lang=gogo:./gen/go {{ .DIR }}/*proto
+      - cp -r ./gen/go/github.com/wores/protoc-gen-pipeline/{{ .DIR }}/* ./{{ .DIR }}
+      - rm -rf ./gen
+    vars:
+      DIR: example
+
+  hoge:
+    desc: Generate pb files.
+    cmds:
+      - prototool format -w ./{{ .DIR }}
+      - prototool generate ./{{ .DIR }}
+      - cp -r ./gen/go/github.com/gogo/protobuf/{{ .DIR }}/* ./{{ .DIR }}
+      - rm -rf ./gen
+    vars:
+      DIR: gogoproto
