@@ -3,13 +3,18 @@ package goshared
 const strTpl = `
 	{{ $f := .Field }}{{ $r := .Rules }}
 
-	{{ if $r.ForceHoge }}
-	{{ property . }} = "force hoge" 
-    {{ end }}
-
 	{{ if $r.Trim }}
 	{{ trim . $r.Trim }}
     {{ end }}
+
+	{{ if $r.Remove }}
+	{{ property . }} = strings.ReplaceAll({{ accessor . }}, "{{ $r.Remove }}", "")
+    {{ end }}
+
+	{{ if $r.Replace }}
+	{{ property . }} = strings.ReplaceAll({{ accessor . }}, "{{ $r.Replace.Old }}", "{{ $r.Replace.New }}")
+    {{ end }}
+    
 `
 
 //  {{ if $r.ForceHoge }}

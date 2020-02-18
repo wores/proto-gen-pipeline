@@ -26,8 +26,9 @@ func (fns goSharedStringFuncs) trim(ctx shared.RuleContext, trimType pipeline.Tr
 	case pipeline.TrimType_TrimTypeRight:
 		return genStatement("Right")
 
+	default:
+		panic(fmt.Sprintf("TrimType %d is not exist", trimType))
 	}
 
-	return fmt.Sprintf("%s = strings.TrimSpace(%s)", fns.property(ctx), fns.accessor(ctx))
 }
 

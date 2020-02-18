@@ -121,6 +121,134 @@ var _ interface {
 	ErrorName() string
 } = ExamplePipelineError{}
 
+func (m *RemoveExample) Pipeline() error {
+	if m == nil {
+		return nil
+	}
+
+	m.Text = strings.ReplaceAll(m.GetText(), "-", "")
+
+	return nil
+}
+
+// RemoveExamplePipelineError is the pipeline error returned by
+// RemoveExample.Pipeline if the designated constraints aren't met.
+type RemoveExamplePipelineError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e RemoveExamplePipelineError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e RemoveExamplePipelineError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e RemoveExamplePipelineError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e RemoveExamplePipelineError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e RemoveExamplePipelineError) ErrorName() string { return "RemoveExamplePipelineError" }
+
+// Error satisfies the builtin error interface
+func (e RemoveExamplePipelineError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sRemoveExample.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = RemoveExamplePipelineError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = RemoveExamplePipelineError{}
+
+func (m *ReplaceExample) Pipeline() error {
+	if m == nil {
+		return nil
+	}
+
+	m.Text = strings.ReplaceAll(m.GetText(), "*", "%")
+
+	return nil
+}
+
+// ReplaceExamplePipelineError is the pipeline error returned by
+// ReplaceExample.Pipeline if the designated constraints aren't met.
+type ReplaceExamplePipelineError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e ReplaceExamplePipelineError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e ReplaceExamplePipelineError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e ReplaceExamplePipelineError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e ReplaceExamplePipelineError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e ReplaceExamplePipelineError) ErrorName() string { return "ReplaceExamplePipelineError" }
+
+// Error satisfies the builtin error interface
+func (e ReplaceExamplePipelineError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sReplaceExample.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = ReplaceExamplePipelineError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = ReplaceExamplePipelineError{}
+
 func (m *Example_Inner) Pipeline() error {
 	if m == nil {
 		return nil

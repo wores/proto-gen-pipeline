@@ -69,3 +69,27 @@ func TestExample_Trim(t *testing.T) {
 	})
 
 }
+
+func TestRemoveExample_Pipeline(t *testing.T) {
+
+	t.Run("remove", func(t *testing.T) {
+
+		actual := RemoveExample{
+			Text: "03-0123-3849-",
+		}
+
+		err := actual.Pipeline()
+		if err != nil {
+			t.Fatal(err)
+		}
+
+		expect := RemoveExample{
+			Text: "0301233849",
+		}
+		if diff := cmp.Diff(actual, expect); diff != "" {
+			t.Fatal(diff)
+		}
+
+	})
+
+}

@@ -4,7 +4,6 @@ package example;
 
 option go_package = "github.com/wores/protoc-gen-pipeline/example";
 
-//import "github.com/gogo/protobuf/gogoproto/gogo.proto";
 import "google/protobuf/wrappers.proto";
 import "pipeline/pipeline.proto";
 
@@ -53,18 +52,17 @@ message Example {
 
 }
 
-//message SecondMessage {
-//    string with_new_tags = 1 [(tagger.tags) = "graphql:\"withNewTags,optional\"" ];
-//    string with_new_multiple = 2 [(tagger.tags) = "graphql:\"withNewTags,optional\" xml:\"multi,omitempty\"" ];
-//
-//    string replace_default = 3 [(tagger.tags) = "json:\"replacePrevious\""] ;
-//}
-//
-//message ThirdExample {
-//    message InnerExample {
-//        string id = 1 [(tagger.tags) = "json:\"yes\""];
-//        int32 yes = 2 [(tagger.tags) = "json:\"id\""];
-//    }
-//
-//    InnerExample inner_example = 1 [(tagger.tags) = "json:\"inner\""];
-//}
+message RemoveExample {
+  string text = 1 [(pipeline.processes).string.remove = "-"];
+}
+
+message ReplaceExample {
+  string text = 1 [
+    (pipeline.processes).string = {
+      replace: {
+        old: "*"
+        new: "%"
+      }
+    }
+  ];
+}

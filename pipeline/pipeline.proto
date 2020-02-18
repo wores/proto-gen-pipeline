@@ -6,16 +6,9 @@ option go_package = "github.com/wores/protoc-gen-pipeline/pipeline";
 
 import "google/protobuf/descriptor.proto";
 
-// Tags are applied at the field level
 extend google.protobuf.FieldOptions {
-  // Multiple Tags can be spcified.
   optional FieldProcesses processes = 27063;
 }
-
-//extend google.protobuf.OneofOptions {
-//    // Multiple Tags can be spcified.
-//    string oneof_tags = 847939;
-//}
 
 message FieldProcesses {
   optional MessageProcesses message = 1;
@@ -26,20 +19,25 @@ message FieldProcesses {
 }
 
 message StringProcesses {
-  optional bool forceHoge = 1;
-  optional TrimType trim = 2;
+  // トリムする。
+  optional TrimType trim = 1;
+  // 指定した文字を削除する。
+  optional string remove = 2;
+  // 指定した文字を指定した文字へリプレイスする。
+  optional StringReplace replace = 3;
+}
+
+message StringReplace {
+  required string old = 1;
+  required string new = 2;
 }
 
 message RepeatedProcesses {
-  // Items specifies the contraints to be applied to each item in the field.
-  // Repeated message fields will still execute validation against each item
-  // unless skip is specified here.
   optional FieldProcesses items = 1;
 }
 
 message MessageProcesses {
-  // Skip specifies that the validation rules of this field should not be
-  // evaluated
+  // 処理をskipする。
   optional bool skip = 1;
 }
 
