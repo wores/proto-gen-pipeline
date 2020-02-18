@@ -12,6 +12,7 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"unicode"
 	"unicode/utf8"
 
 	"github.com/golang/protobuf/ptypes"
@@ -22,6 +23,7 @@ var (
 	_ = bytes.MinRead
 	_ = errors.New("")
 	_ = fmt.Print
+    _ = unicode.Hiragana
 	_ = utf8.UTFMax
 	_ = (*regexp.Regexp)(nil)
 	_ = (*strings.Reader)(nil)

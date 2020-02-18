@@ -9,7 +9,7 @@ import "google/protobuf/wrappers.proto";
 import "pipeline/pipeline.proto";
 
 message Example {
-  string text = 1 [(pipeline.processes).string.trim = TrimTypeBoth];
+  string text = 1 [(pipeline.processes).string.trim = TrimTypeLeft];
   google.protobuf.StringValue wrapText = 2 [
     (pipeline.processes).string = {
       trim: TrimTypeBoth
@@ -23,7 +23,7 @@ message Example {
   message Inner {
     string text = 1 [
       (pipeline.processes).string = {
-        trim: TrimTypeBoth
+        trim: TrimTypeRight
       }
     ];
     google.protobuf.StringValue wrapText = 2 [

@@ -14,6 +14,7 @@ import (
 
 func Register(tpl *template.Template, params pgs.Parameters) {
 	fns := goSharedFuncs{pgsgo.InitContext(params)}
+	fnsForString := goSharedStringFuncs{fns}
 
 	tpl.Funcs(map[string]interface{}{
 		"accessor":    fns.accessor,
@@ -32,14 +33,16 @@ func Register(tpl *template.Template, params pgs.Parameters) {
 		"pkg":         fns.PackageName,
 		"typ":         fns.Type,
 		"unwrap":      fns.unwrap,
-
-		"trim":        fns.trim,
 	})
+
+	funcsForString := map[string]interface{}{
+		"trim":        fnsForString.trim,
+	}
 
 	template.Must(tpl.New("msg").Parse(msgTpl))
 
 	template.Must(tpl.New("none").Parse(noneTpl))
-	template.Must(tpl.New("string").Parse(strTpl))
+	template.Must(tpl.New("string").Funcs(funcsForString).Parse(strTpl))
 
 	template.Must(tpl.New("repeated").Parse(repTpl))
 
@@ -169,11 +172,6 @@ func (fns goSharedFuncs) unwrap(ctx shared.RuleContext, name string) (shared.Rul
 	ctx.PropertyOverride = fmt.Sprintf("%s.%s", name, overrideName)
 
 	return ctx, nil
-}
-
-func (fns goSharedFuncs) trim(ctx shared.RuleContext) string {
-	value := fmt.Sprintf("strings.TrimSpace(%s)", fns.accessor(ctx))
-	return fmt.Sprintf("m.%s = %s", fns.Name(ctx.Field), value)
 }
 
 func (fns goSharedFuncs) msgTyp(message pgs.Message) pgsgo.TypeName {

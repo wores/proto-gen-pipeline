@@ -1,13 +1,14 @@
 package example
 
 import (
-	"fmt"
 	"testing"
 
 	"github.com/golang/protobuf/ptypes/wrappers"
+	"github.com/google/go-cmp/cmp"
 )
 
 func TestExample_Trim(t *testing.T) {
+
 	t.Run("trimの処理が期待通りに動く", func(t *testing.T) {
 		e := Example{
 			Text: " text  ",
@@ -37,31 +38,33 @@ func TestExample_Trim(t *testing.T) {
 			t.Fatal(err)
 		}
 
-		testFn := func (text string, wrapText *wrappers.StringValue, texts []string) {
+		expect := Example{
+			Text: "text  ",
+			WrapText: &wrappers.StringValue{
+				Value: "text",
+			},
+			Texts: []string{"t1", "t2", "t3"},
 
-			expect := "text"
+			Inner: &Example_Inner{
+				Text: " text",
+				WrapText: &wrappers.StringValue{
+					Value: "text",
+				},
+				Texts: []string{"t1", "t2", "t3"},
 
-			if text != expect {
-				t.Fatalf("text must be '%s'. But '%s'", expect, text)
-			}
-
-			if wrapText.Value != expect {
-				t.Fatalf("wrapText.Value must be '%s'. But '%s'", expect, wrapText.Value)
-			}
-
-			for i := range texts {
-				expectVar := fmt.Sprintf("t%d", i+1)
-				actual := texts[i]
-				if actual != expectVar {
-					t.Fatalf("texts[%d] must be '%s'. But '%s'", i, expectVar, actual)
-				}
-			}
-
+				Inner: &Example_Inner{
+					Text: " text",
+					WrapText: &wrappers.StringValue{
+						Value: "text",
+					},
+					Texts: []string{"t1", "t2", "t3"},
+				},
+			},
 		}
 
-		testFn(e.Text, e.WrapText, e.Texts)
-		testFn(e.Inner.Text, e.Inner.WrapText, e.Inner.Texts)
-		testFn(e.Inner.Inner.Text, e.Inner.Inner.WrapText, e.Inner.Inner.Texts)
+		if diff := cmp.Diff(e, expect); diff != "" {
+			t.Fatal(diff)
+		}
 
 	})
 

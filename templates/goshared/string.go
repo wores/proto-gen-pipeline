@@ -8,7 +8,7 @@ const strTpl = `
     {{ end }}
 
 	{{ if $r.Trim }}
-	{{ property . }} = strings.TrimSpace({{ accessor . }})
+	{{ trim . $r.Trim }}
     {{ end }}
 `
 

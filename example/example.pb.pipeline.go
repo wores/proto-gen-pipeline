@@ -10,6 +10,7 @@ import (
 	"regexp"
 	"strings"
 	"time"
+	"unicode"
 	"unicode/utf8"
 
 	"github.com/golang/protobuf/ptypes"
@@ -20,6 +21,7 @@ var (
 	_ = bytes.MinRead
 	_ = errors.New("")
 	_ = fmt.Print
+	_ = unicode.Hiragana
 	_ = utf8.UTFMax
 	_ = (*regexp.Regexp)(nil)
 	_ = (*strings.Reader)(nil)
@@ -32,18 +34,18 @@ func (m *Example) Pipeline() error {
 		return nil
 	}
 
-	m.Text = strings.TrimSpace(m.GetText())
+	m.Text = strings.TrimLeftFunc(m.GetText(), func(r rune) bool { return unicode.IsSpace(r) })
 
 	if wrapper := m.GetWrapText(); wrapper != nil {
 
-		wrapper.Value = strings.TrimSpace(wrapper.GetValue())
+		wrapper.Value = strings.TrimFunc(wrapper.GetValue(), func(r rune) bool { return unicode.IsSpace(r) })
 
 	}
 
 	for idx, item := range m.GetTexts() {
 		_, _ = idx, item
 
-		m.Texts[idx] = strings.TrimSpace(item)
+		m.Texts[idx] = strings.TrimFunc(item, func(r rune) bool { return unicode.IsSpace(r) })
 
 	}
 
@@ -124,18 +126,18 @@ func (m *Example_Inner) Pipeline() error {
 		return nil
 	}
 
-	m.Text = strings.TrimSpace(m.GetText())
+	m.Text = strings.TrimRightFunc(m.GetText(), func(r rune) bool { return unicode.IsSpace(r) })
 
 	if wrapper := m.GetWrapText(); wrapper != nil {
 
-		wrapper.Value = strings.TrimSpace(wrapper.GetValue())
+		wrapper.Value = strings.TrimFunc(wrapper.GetValue(), func(r rune) bool { return unicode.IsSpace(r) })
 
 	}
 
 	for idx, item := range m.GetTexts() {
 		_, _ = idx, item
 
-		m.Texts[idx] = strings.TrimSpace(item)
+		m.Texts[idx] = strings.TrimFunc(item, func(r rune) bool { return unicode.IsSpace(r) })
 
 	}
 
