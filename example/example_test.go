@@ -10,7 +10,7 @@ import (
 func TestExample_Trim(t *testing.T) {
 
 	t.Run("trimの処理が期待通りに動く", func(t *testing.T) {
-		e := Example{
+		actual := Example{
 			Text: " text  ",
 			WrapText: &wrappers.StringValue{
 				Value: "  text ",
@@ -18,22 +18,22 @@ func TestExample_Trim(t *testing.T) {
 			Texts: []string{" t1 ", "  t2  ", "   t3   "},
 
 			Inner: &Example_Inner{
-				Text: " text  ",
+				Text: " i_text  ",
 				WrapText: &wrappers.StringValue{
-					Value: "    text    ",
+					Value: "    i_text    ",
 				},
-				Texts: []string{" t1 ", "  t2  ", "   t3   "},
+				Texts: []string{" i1 ", "  i2  ", "   i3   "},
 
 				Inner: &Example_Inner{
-					Text: " text  ",
+					Text: " ii_text  ",
 					WrapText: &wrappers.StringValue{
-						Value: "    text    ",
+						Value: "    ii_text    ",
 					},
-					Texts: []string{" t1 ", "  t2  ", "   t3   "},
+					Texts: []string{" ii1 ", "  ii2  ", "   ii3   "},
 				},
 			},
 		}
-		err := e.Pipeline()
+		err := actual.Pipeline()
 		if err != nil {
 			t.Fatal(err)
 		}
@@ -46,23 +46,23 @@ func TestExample_Trim(t *testing.T) {
 			Texts: []string{"t1", "t2", "t3"},
 
 			Inner: &Example_Inner{
-				Text: " text",
+				Text: " i_text",
 				WrapText: &wrappers.StringValue{
-					Value: "text",
+					Value: "i_text",
 				},
-				Texts: []string{"t1", "t2", "t3"},
+				Texts: []string{"i1", "i2", "i3"},
 
 				Inner: &Example_Inner{
-					Text: " text",
+					Text: " ii_text",
 					WrapText: &wrappers.StringValue{
-						Value: "text",
+						Value: "ii_text",
 					},
-					Texts: []string{"t1", "t2", "t3"},
+					Texts: []string{"ii1", "ii2", "ii3"},
 				},
 			},
 		}
 
-		if diff := cmp.Diff(e, expect); diff != "" {
+		if diff := cmp.Diff(actual, expect); diff != "" {
 			t.Fatal(diff)
 		}
 
