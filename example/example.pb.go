@@ -22,200 +22,238 @@ var _ = math.Inf
 // proto package needs to be updated.
 const _ = proto.GoGoProtoPackageIsVersion3 // please upgrade the proto package
 
-type Example struct {
-	Text                 string                `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
-	WrapText             *wrappers.StringValue `protobuf:"bytes,2,opt,name=wrapText,proto3" json:"wrapText,omitempty"`
-	Texts                []string              `protobuf:"bytes,3,rep,name=texts,proto3" json:"texts,omitempty"`
-	Inner                *Example_Inner        `protobuf:"bytes,4,opt,name=inner,proto3" json:"inner,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
-	XXX_unrecognized     []byte                `json:"-"`
-	XXX_sizecache        int32                 `json:"-"`
+type StringAllExample struct {
+	Text                 string   `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *Example) Reset()         { *m = Example{} }
-func (m *Example) String() string { return proto.CompactTextString(m) }
-func (*Example) ProtoMessage()    {}
-func (*Example) Descriptor() ([]byte, []int) {
+func (m *StringAllExample) Reset()         { *m = StringAllExample{} }
+func (m *StringAllExample) String() string { return proto.CompactTextString(m) }
+func (*StringAllExample) ProtoMessage()    {}
+func (*StringAllExample) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1c78cffa5d645ba4, []int{0}
 }
-func (m *Example) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Example.Unmarshal(m, b)
+func (m *StringAllExample) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StringAllExample.Unmarshal(m, b)
 }
-func (m *Example) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Example.Marshal(b, m, deterministic)
+func (m *StringAllExample) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StringAllExample.Marshal(b, m, deterministic)
 }
-func (m *Example) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Example.Merge(m, src)
+func (m *StringAllExample) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StringAllExample.Merge(m, src)
 }
-func (m *Example) XXX_Size() int {
-	return xxx_messageInfo_Example.Size(m)
+func (m *StringAllExample) XXX_Size() int {
+	return xxx_messageInfo_StringAllExample.Size(m)
 }
-func (m *Example) XXX_DiscardUnknown() {
-	xxx_messageInfo_Example.DiscardUnknown(m)
+func (m *StringAllExample) XXX_DiscardUnknown() {
+	xxx_messageInfo_StringAllExample.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_Example proto.InternalMessageInfo
+var xxx_messageInfo_StringAllExample proto.InternalMessageInfo
 
-func (m *Example) GetText() string {
+func (m *StringAllExample) GetText() string {
 	if m != nil {
 		return m.Text
 	}
 	return ""
 }
 
-func (m *Example) GetWrapText() *wrappers.StringValue {
-	if m != nil {
-		return m.WrapText
-	}
-	return nil
+type StringTrimExample struct {
+	Text                 string                   `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
+	WrapText             *wrappers.StringValue    `protobuf:"bytes,2,opt,name=wrapText,proto3" json:"wrapText,omitempty"`
+	Texts                []string                 `protobuf:"bytes,3,rep,name=texts,proto3" json:"texts,omitempty"`
+	Inner                *StringTrimExample_Inner `protobuf:"bytes,4,opt,name=inner,proto3" json:"inner,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
 }
 
-func (m *Example) GetTexts() []string {
-	if m != nil {
-		return m.Texts
-	}
-	return nil
-}
-
-func (m *Example) GetInner() *Example_Inner {
-	if m != nil {
-		return m.Inner
-	}
-	return nil
-}
-
-type Example_Inner struct {
-	Text                 string                `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
-	WrapText             *wrappers.StringValue `protobuf:"bytes,2,opt,name=wrapText,proto3" json:"wrapText,omitempty"`
-	Texts                []string              `protobuf:"bytes,3,rep,name=texts,proto3" json:"texts,omitempty"`
-	Inner                *Example_Inner        `protobuf:"bytes,4,opt,name=inner,proto3" json:"inner,omitempty"`
-	XXX_NoUnkeyedLiteral struct{}              `json:"-"`
-	XXX_unrecognized     []byte                `json:"-"`
-	XXX_sizecache        int32                 `json:"-"`
-}
-
-func (m *Example_Inner) Reset()         { *m = Example_Inner{} }
-func (m *Example_Inner) String() string { return proto.CompactTextString(m) }
-func (*Example_Inner) ProtoMessage()    {}
-func (*Example_Inner) Descriptor() ([]byte, []int) {
-	return fileDescriptor_1c78cffa5d645ba4, []int{0, 0}
-}
-func (m *Example_Inner) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_Example_Inner.Unmarshal(m, b)
-}
-func (m *Example_Inner) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_Example_Inner.Marshal(b, m, deterministic)
-}
-func (m *Example_Inner) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_Example_Inner.Merge(m, src)
-}
-func (m *Example_Inner) XXX_Size() int {
-	return xxx_messageInfo_Example_Inner.Size(m)
-}
-func (m *Example_Inner) XXX_DiscardUnknown() {
-	xxx_messageInfo_Example_Inner.DiscardUnknown(m)
-}
-
-var xxx_messageInfo_Example_Inner proto.InternalMessageInfo
-
-func (m *Example_Inner) GetText() string {
-	if m != nil {
-		return m.Text
-	}
-	return ""
-}
-
-func (m *Example_Inner) GetWrapText() *wrappers.StringValue {
-	if m != nil {
-		return m.WrapText
-	}
-	return nil
-}
-
-func (m *Example_Inner) GetTexts() []string {
-	if m != nil {
-		return m.Texts
-	}
-	return nil
-}
-
-func (m *Example_Inner) GetInner() *Example_Inner {
-	if m != nil {
-		return m.Inner
-	}
-	return nil
-}
-
-type RemoveExample struct {
-	Text                 string   `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
-	XXX_NoUnkeyedLiteral struct{} `json:"-"`
-	XXX_unrecognized     []byte   `json:"-"`
-	XXX_sizecache        int32    `json:"-"`
-}
-
-func (m *RemoveExample) Reset()         { *m = RemoveExample{} }
-func (m *RemoveExample) String() string { return proto.CompactTextString(m) }
-func (*RemoveExample) ProtoMessage()    {}
-func (*RemoveExample) Descriptor() ([]byte, []int) {
+func (m *StringTrimExample) Reset()         { *m = StringTrimExample{} }
+func (m *StringTrimExample) String() string { return proto.CompactTextString(m) }
+func (*StringTrimExample) ProtoMessage()    {}
+func (*StringTrimExample) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1c78cffa5d645ba4, []int{1}
 }
-func (m *RemoveExample) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_RemoveExample.Unmarshal(m, b)
+func (m *StringTrimExample) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StringTrimExample.Unmarshal(m, b)
 }
-func (m *RemoveExample) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_RemoveExample.Marshal(b, m, deterministic)
+func (m *StringTrimExample) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StringTrimExample.Marshal(b, m, deterministic)
 }
-func (m *RemoveExample) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_RemoveExample.Merge(m, src)
+func (m *StringTrimExample) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StringTrimExample.Merge(m, src)
 }
-func (m *RemoveExample) XXX_Size() int {
-	return xxx_messageInfo_RemoveExample.Size(m)
+func (m *StringTrimExample) XXX_Size() int {
+	return xxx_messageInfo_StringTrimExample.Size(m)
 }
-func (m *RemoveExample) XXX_DiscardUnknown() {
-	xxx_messageInfo_RemoveExample.DiscardUnknown(m)
+func (m *StringTrimExample) XXX_DiscardUnknown() {
+	xxx_messageInfo_StringTrimExample.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_RemoveExample proto.InternalMessageInfo
+var xxx_messageInfo_StringTrimExample proto.InternalMessageInfo
 
-func (m *RemoveExample) GetText() string {
+func (m *StringTrimExample) GetText() string {
 	if m != nil {
 		return m.Text
 	}
 	return ""
 }
 
-type ReplaceExample struct {
+func (m *StringTrimExample) GetWrapText() *wrappers.StringValue {
+	if m != nil {
+		return m.WrapText
+	}
+	return nil
+}
+
+func (m *StringTrimExample) GetTexts() []string {
+	if m != nil {
+		return m.Texts
+	}
+	return nil
+}
+
+func (m *StringTrimExample) GetInner() *StringTrimExample_Inner {
+	if m != nil {
+		return m.Inner
+	}
+	return nil
+}
+
+type StringTrimExample_Inner struct {
+	Text                 string                   `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
+	WrapText             *wrappers.StringValue    `protobuf:"bytes,2,opt,name=wrapText,proto3" json:"wrapText,omitempty"`
+	Texts                []string                 `protobuf:"bytes,3,rep,name=texts,proto3" json:"texts,omitempty"`
+	Inner                *StringTrimExample_Inner `protobuf:"bytes,4,opt,name=inner,proto3" json:"inner,omitempty"`
+	XXX_NoUnkeyedLiteral struct{}                 `json:"-"`
+	XXX_unrecognized     []byte                   `json:"-"`
+	XXX_sizecache        int32                    `json:"-"`
+}
+
+func (m *StringTrimExample_Inner) Reset()         { *m = StringTrimExample_Inner{} }
+func (m *StringTrimExample_Inner) String() string { return proto.CompactTextString(m) }
+func (*StringTrimExample_Inner) ProtoMessage()    {}
+func (*StringTrimExample_Inner) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1c78cffa5d645ba4, []int{1, 0}
+}
+func (m *StringTrimExample_Inner) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StringTrimExample_Inner.Unmarshal(m, b)
+}
+func (m *StringTrimExample_Inner) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StringTrimExample_Inner.Marshal(b, m, deterministic)
+}
+func (m *StringTrimExample_Inner) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StringTrimExample_Inner.Merge(m, src)
+}
+func (m *StringTrimExample_Inner) XXX_Size() int {
+	return xxx_messageInfo_StringTrimExample_Inner.Size(m)
+}
+func (m *StringTrimExample_Inner) XXX_DiscardUnknown() {
+	xxx_messageInfo_StringTrimExample_Inner.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StringTrimExample_Inner proto.InternalMessageInfo
+
+func (m *StringTrimExample_Inner) GetText() string {
+	if m != nil {
+		return m.Text
+	}
+	return ""
+}
+
+func (m *StringTrimExample_Inner) GetWrapText() *wrappers.StringValue {
+	if m != nil {
+		return m.WrapText
+	}
+	return nil
+}
+
+func (m *StringTrimExample_Inner) GetTexts() []string {
+	if m != nil {
+		return m.Texts
+	}
+	return nil
+}
+
+func (m *StringTrimExample_Inner) GetInner() *StringTrimExample_Inner {
+	if m != nil {
+		return m.Inner
+	}
+	return nil
+}
+
+type StringRemoveExample struct {
 	Text                 string   `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
 	XXX_NoUnkeyedLiteral struct{} `json:"-"`
 	XXX_unrecognized     []byte   `json:"-"`
 	XXX_sizecache        int32    `json:"-"`
 }
 
-func (m *ReplaceExample) Reset()         { *m = ReplaceExample{} }
-func (m *ReplaceExample) String() string { return proto.CompactTextString(m) }
-func (*ReplaceExample) ProtoMessage()    {}
-func (*ReplaceExample) Descriptor() ([]byte, []int) {
+func (m *StringRemoveExample) Reset()         { *m = StringRemoveExample{} }
+func (m *StringRemoveExample) String() string { return proto.CompactTextString(m) }
+func (*StringRemoveExample) ProtoMessage()    {}
+func (*StringRemoveExample) Descriptor() ([]byte, []int) {
 	return fileDescriptor_1c78cffa5d645ba4, []int{2}
 }
-func (m *ReplaceExample) XXX_Unmarshal(b []byte) error {
-	return xxx_messageInfo_ReplaceExample.Unmarshal(m, b)
+func (m *StringRemoveExample) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StringRemoveExample.Unmarshal(m, b)
 }
-func (m *ReplaceExample) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
-	return xxx_messageInfo_ReplaceExample.Marshal(b, m, deterministic)
+func (m *StringRemoveExample) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StringRemoveExample.Marshal(b, m, deterministic)
 }
-func (m *ReplaceExample) XXX_Merge(src proto.Message) {
-	xxx_messageInfo_ReplaceExample.Merge(m, src)
+func (m *StringRemoveExample) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StringRemoveExample.Merge(m, src)
 }
-func (m *ReplaceExample) XXX_Size() int {
-	return xxx_messageInfo_ReplaceExample.Size(m)
+func (m *StringRemoveExample) XXX_Size() int {
+	return xxx_messageInfo_StringRemoveExample.Size(m)
 }
-func (m *ReplaceExample) XXX_DiscardUnknown() {
-	xxx_messageInfo_ReplaceExample.DiscardUnknown(m)
+func (m *StringRemoveExample) XXX_DiscardUnknown() {
+	xxx_messageInfo_StringRemoveExample.DiscardUnknown(m)
 }
 
-var xxx_messageInfo_ReplaceExample proto.InternalMessageInfo
+var xxx_messageInfo_StringRemoveExample proto.InternalMessageInfo
 
-func (m *ReplaceExample) GetText() string {
+func (m *StringRemoveExample) GetText() string {
+	if m != nil {
+		return m.Text
+	}
+	return ""
+}
+
+type StringReplaceExample struct {
+	Text                 string   `protobuf:"bytes,1,opt,name=text,proto3" json:"text,omitempty"`
+	XXX_NoUnkeyedLiteral struct{} `json:"-"`
+	XXX_unrecognized     []byte   `json:"-"`
+	XXX_sizecache        int32    `json:"-"`
+}
+
+func (m *StringReplaceExample) Reset()         { *m = StringReplaceExample{} }
+func (m *StringReplaceExample) String() string { return proto.CompactTextString(m) }
+func (*StringReplaceExample) ProtoMessage()    {}
+func (*StringReplaceExample) Descriptor() ([]byte, []int) {
+	return fileDescriptor_1c78cffa5d645ba4, []int{3}
+}
+func (m *StringReplaceExample) XXX_Unmarshal(b []byte) error {
+	return xxx_messageInfo_StringReplaceExample.Unmarshal(m, b)
+}
+func (m *StringReplaceExample) XXX_Marshal(b []byte, deterministic bool) ([]byte, error) {
+	return xxx_messageInfo_StringReplaceExample.Marshal(b, m, deterministic)
+}
+func (m *StringReplaceExample) XXX_Merge(src proto.Message) {
+	xxx_messageInfo_StringReplaceExample.Merge(m, src)
+}
+func (m *StringReplaceExample) XXX_Size() int {
+	return xxx_messageInfo_StringReplaceExample.Size(m)
+}
+func (m *StringReplaceExample) XXX_DiscardUnknown() {
+	xxx_messageInfo_StringReplaceExample.DiscardUnknown(m)
+}
+
+var xxx_messageInfo_StringReplaceExample proto.InternalMessageInfo
+
+func (m *StringReplaceExample) GetText() string {
 	if m != nil {
 		return m.Text
 	}
@@ -223,34 +261,38 @@ func (m *ReplaceExample) GetText() string {
 }
 
 func init() {
-	proto.RegisterType((*Example)(nil), "example.Example")
-	proto.RegisterType((*Example_Inner)(nil), "example.Example.Inner")
-	proto.RegisterType((*RemoveExample)(nil), "example.RemoveExample")
-	proto.RegisterType((*ReplaceExample)(nil), "example.ReplaceExample")
+	proto.RegisterType((*StringAllExample)(nil), "example.StringAllExample")
+	proto.RegisterType((*StringTrimExample)(nil), "example.StringTrimExample")
+	proto.RegisterType((*StringTrimExample_Inner)(nil), "example.StringTrimExample.Inner")
+	proto.RegisterType((*StringRemoveExample)(nil), "example.StringRemoveExample")
+	proto.RegisterType((*StringReplaceExample)(nil), "example.StringReplaceExample")
 }
 
 func init() { proto.RegisterFile("example/example.proto", fileDescriptor_1c78cffa5d645ba4) }
 
 var fileDescriptor_1c78cffa5d645ba4 = []byte{
-	// 312 bytes of a gzipped FileDescriptorProto
-	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xcc, 0x52, 0x41, 0x4b, 0x84, 0x40,
-	0x14, 0x66, 0x74, 0xdd, 0xd5, 0x29, 0xf7, 0x30, 0x50, 0x89, 0x6c, 0x21, 0x42, 0x20, 0xb1, 0x8e,
-	0x50, 0xfd, 0x02, 0xa1, 0x43, 0x57, 0x8b, 0x0e, 0xdd, 0x54, 0x5e, 0x26, 0xa8, 0x33, 0x8c, 0xda,
-	0xee, 0x7f, 0xf1, 0x9f, 0xd8, 0x4f, 0xeb, 0x12, 0x3a, 0x2a, 0xec, 0xa1, 0x7b, 0xa7, 0x99, 0x79,
-	0xdf, 0xf7, 0xbd, 0xf7, 0x7d, 0xcc, 0xc3, 0x17, 0x70, 0x8c, 0x4b, 0x5e, 0x40, 0x30, 0x9d, 0x94,
-	0x0b, 0xd6, 0x30, 0xb2, 0x99, 0x9e, 0xf6, 0x4d, 0xc6, 0x58, 0x56, 0x40, 0x30, 0x96, 0x93, 0xf6,
-	0x23, 0x38, 0x88, 0x98, 0x73, 0x10, 0xb5, 0x24, 0xda, 0x57, 0x3c, 0xe7, 0x50, 0xe4, 0x15, 0x04,
-	0xf3, 0x45, 0x02, 0xee, 0x8f, 0x82, 0x37, 0x4f, 0xb2, 0x09, 0xd9, 0xe1, 0x55, 0x03, 0xc7, 0xc6,
-	0x42, 0x0e, 0xf2, 0x8c, 0x50, 0xef, 0x3b, 0x73, 0x45, 0x14, 0x5d, 0x89, 0xc6, 0x2a, 0x09, 0xb1,
-	0x3e, 0x34, 0x7d, 0x1d, 0x18, 0x8a, 0x83, 0xbc, 0xb3, 0xfb, 0x1d, 0x95, 0x53, 0xe9, 0x3c, 0x95,
-	0xbe, 0x34, 0x22, 0xaf, 0xb2, 0xb7, 0xb8, 0x68, 0x61, 0xd1, 0xa3, 0x68, 0xd1, 0x11, 0x17, 0x6b,
-	0x43, 0xaf, 0xda, 0x52, 0x1d, 0xd5, 0x33, 0xc2, 0xf3, 0xbe, 0x33, 0x75, 0x7b, 0x8d, 0x25, 0x4d,
-	0x42, 0x64, 0x8f, 0xb5, 0xbc, 0xaa, 0x40, 0x58, 0xab, 0x71, 0xc8, 0x25, 0x9d, 0x23, 0x4f, 0x36,
-	0xe9, 0xf3, 0x80, 0x46, 0x92, 0x64, 0x7f, 0x23, 0xac, 0x8d, 0x85, 0x3f, 0xdc, 0xab, 0xff, 0xd9,
-	0xbd, 0x4b, 0xb1, 0x19, 0x41, 0xc9, 0xbe, 0x60, 0xfe, 0x82, 0xeb, 0x93, 0x10, 0x46, 0xdf, 0x99,
-	0x1a, 0x51, 0x09, 0xf2, 0x65, 0x0a, 0xf7, 0x11, 0x6f, 0x23, 0xe0, 0x45, 0x9c, 0x2e, 0x02, 0xf7,
-	0x44, 0xb0, 0xed, 0x3b, 0x13, 0x93, 0xc1, 0x14, 0xba, 0x23, 0xe8, 0x56, 0xaa, 0x42, 0xfa, 0xbe,
-	0xcf, 0xf2, 0xe6, 0xb3, 0x4d, 0x68, 0xca, 0xca, 0xe0, 0xc0, 0x04, 0xd4, 0x72, 0x51, 0x52, 0x3f,
-	0x83, 0xca, 0x5f, 0x56, 0x63, 0xb2, 0x9a, 0xac, 0x47, 0xf0, 0xe1, 0x37, 0x00, 0x00, 0xff, 0xff,
-	0xef, 0x07, 0x3f, 0x20, 0x75, 0x02, 0x00, 0x00,
+	// 360 bytes of a gzipped FileDescriptorProto
+	0x1f, 0x8b, 0x08, 0x00, 0x00, 0x00, 0x00, 0x00, 0x02, 0xff, 0xd4, 0x92, 0xc1, 0x4e, 0xab, 0x40,
+	0x14, 0x86, 0x33, 0x50, 0x5a, 0x3a, 0xf7, 0xd2, 0xf4, 0xce, 0xed, 0xcd, 0x6d, 0x48, 0x35, 0x84,
+	0xc4, 0x48, 0x8c, 0x1d, 0x12, 0x35, 0x2e, 0x8c, 0x1b, 0x49, 0x5c, 0xb8, 0xc5, 0xc6, 0x85, 0x71,
+	0x43, 0x9b, 0x11, 0x49, 0x06, 0x66, 0x9c, 0x52, 0xdb, 0x57, 0x31, 0xbc, 0x09, 0x7b, 0xdf, 0xcb,
+	0xc0, 0x01, 0x92, 0xc6, 0xf8, 0x00, 0xae, 0x80, 0x39, 0xff, 0x77, 0xf8, 0xff, 0x39, 0x07, 0xff,
+	0x63, 0xbb, 0x28, 0x95, 0x9c, 0xf9, 0xcd, 0x93, 0x4a, 0x25, 0x72, 0x41, 0x06, 0xcd, 0xa7, 0x7d,
+	0x18, 0x0b, 0x11, 0x73, 0xe6, 0xd7, 0xc7, 0xcb, 0xcd, 0xb3, 0xbf, 0x55, 0x91, 0x94, 0x4c, 0xad,
+	0x41, 0x68, 0xff, 0x97, 0x89, 0x64, 0x3c, 0xc9, 0x98, 0xdf, 0xbe, 0x40, 0xc1, 0xbd, 0xc6, 0xe3,
+	0xfb, 0x5c, 0x25, 0x59, 0x7c, 0xc3, 0xf9, 0x2d, 0x34, 0x23, 0x1e, 0xee, 0xe5, 0x6c, 0x97, 0x4f,
+	0x91, 0x83, 0xbc, 0x61, 0x30, 0x29, 0x0b, 0x6b, 0x4c, 0x46, 0x26, 0x22, 0xe8, 0xd5, 0x1e, 0x60,
+	0x74, 0x4c, 0xb4, 0x27, 0x37, 0xac, 0x15, 0xee, 0xbb, 0x8e, 0xff, 0x00, 0xbe, 0x50, 0x49, 0xda,
+	0xf2, 0xb3, 0x3d, 0xde, 0x2c, 0x0b, 0xab, 0x47, 0x34, 0x53, 0x03, 0x86, 0x04, 0xd8, 0xac, 0xcc,
+	0x2d, 0x2a, 0x85, 0xe6, 0x20, 0xef, 0xd7, 0xd9, 0x8c, 0x82, 0x7b, 0xda, 0xba, 0xa7, 0xd0, 0xf3,
+	0x21, 0xe2, 0x1b, 0xd6, 0xf1, 0x28, 0xec, 0x38, 0xe2, 0x62, 0xa3, 0xea, 0xb5, 0x9e, 0xea, 0x8e,
+	0xee, 0x0d, 0x83, 0xdf, 0x65, 0x61, 0x99, 0x76, 0x1f, 0x83, 0x0c, 0x4a, 0xe4, 0x12, 0x1b, 0x49,
+	0x96, 0x31, 0x35, 0xed, 0xd5, 0x3f, 0x71, 0x68, 0x7b, 0x75, 0x5f, 0x0c, 0xd3, 0xbb, 0x4a, 0x17,
+	0x82, 0xdc, 0xfe, 0x40, 0xd8, 0xa8, 0x0f, 0xbe, 0xc9, 0xa1, 0xff, 0x8c, 0x1c, 0xee, 0x05, 0xfe,
+	0x0b, 0x8a, 0x90, 0xa5, 0xe2, 0x8d, 0xb5, 0xc3, 0x39, 0xd8, 0x0b, 0x35, 0x2c, 0x0b, 0xcb, 0x20,
+	0x3a, 0x41, 0xf3, 0x66, 0xa2, 0x57, 0x78, 0xd2, 0x52, 0x92, 0x47, 0xab, 0x0e, 0x73, 0xf7, 0xb0,
+	0x51, 0x59, 0x58, 0x98, 0x54, 0x56, 0xd1, 0x09, 0x41, 0x47, 0xc0, 0x06, 0xf4, 0xf1, 0x34, 0x4e,
+	0xf2, 0x97, 0xcd, 0x92, 0xae, 0x44, 0xea, 0x6f, 0x85, 0x62, 0x6b, 0x58, 0xc8, 0xd5, 0x3c, 0x66,
+	0xd9, 0xbc, 0x5b, 0xc1, 0x26, 0xc0, 0xb2, 0x5f, 0x17, 0xcf, 0x3f, 0x03, 0x00, 0x00, 0xff, 0xff,
+	0xe9, 0x27, 0x64, 0xb4, 0xdd, 0x02, 0x00, 0x00,
 }

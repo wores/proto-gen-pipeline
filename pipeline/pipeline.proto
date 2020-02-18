@@ -22,8 +22,10 @@ message StringProcesses {
   // トリムする。
   optional TrimType trim = 1;
   // 指定した文字を削除する。
+  // TODO: 配列で指定できるように対応する。
   optional string remove = 2;
   // 指定した文字を指定した文字へリプレイスする。
+  // TODO: 配列で指定できるように対応する。
   optional StringReplace replace = 3;
 }
 

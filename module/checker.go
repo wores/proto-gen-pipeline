@@ -85,9 +85,6 @@ func (m *Module) MustType(typ FieldType, pt pgs.ProtoType, wrapper pgs.WellKnown
 }
 
 func (m *Module) CheckString(r *pipeline.StringProcesses) {
-	//if r.ForceHoge != nil && *r.ForceHoge {
-	//
-	//}
 	//if r.MaxLen != nil {
 	//	max := int(r.GetMaxLen())
 	//	m.Assert(utf8.RuneCountInString(r.GetPrefix()) <= max, "`prefix` length exceeds the `max_len`")

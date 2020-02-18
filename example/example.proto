@@ -7,7 +7,20 @@ option go_package = "github.com/wores/protoc-gen-pipeline/example";
 import "google/protobuf/wrappers.proto";
 import "pipeline/pipeline.proto";
 
-message Example {
+message StringAllExample {
+  string text = 1 [
+    (pipeline.processes).string = {
+      trim: TrimTypeBoth
+      remove: "q"
+      replace: {
+        old: "'"
+        new: "\\\""
+      }
+    }
+  ];
+}
+
+message StringTrimExample {
   string text = 1 [(pipeline.processes).string.trim = TrimTypeLeft];
   google.protobuf.StringValue wrapText = 2 [
     (pipeline.processes).string = {
@@ -52,11 +65,11 @@ message Example {
 
 }
 
-message RemoveExample {
+message StringRemoveExample {
   string text = 1 [(pipeline.processes).string.remove = "-"];
 }
 
-message ReplaceExample {
+message StringReplaceExample {
   string text = 1 [
     (pipeline.processes).string = {
       replace: {

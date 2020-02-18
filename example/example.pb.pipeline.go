@@ -29,7 +29,75 @@ var (
 	_ = ptypes.DynamicAny{}
 )
 
-func (m *Example) Pipeline() error {
+func (m *StringAllExample) Pipeline() error {
+	if m == nil {
+		return nil
+	}
+
+	m.Text = strings.TrimFunc(m.GetText(), func(r rune) bool { return unicode.IsSpace(r) })
+
+	m.Text = strings.ReplaceAll(m.GetText(), "q", "")
+
+	m.Text = strings.ReplaceAll(m.GetText(), "'", "\"")
+
+	return nil
+}
+
+// StringAllExamplePipelineError is the pipeline error returned by
+// StringAllExample.Pipeline if the designated constraints aren't met.
+type StringAllExamplePipelineError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StringAllExamplePipelineError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StringAllExamplePipelineError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StringAllExamplePipelineError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StringAllExamplePipelineError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StringAllExamplePipelineError) ErrorName() string { return "StringAllExamplePipelineError" }
+
+// Error satisfies the builtin error interface
+func (e StringAllExamplePipelineError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStringAllExample.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StringAllExamplePipelineError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StringAllExamplePipelineError{}
+
+func (m *StringTrimExample) Pipeline() error {
 	if m == nil {
 		return nil
 	}
@@ -55,7 +123,7 @@ func (m *Example) Pipeline() error {
 		if v, ok := interface{}(tmp).(interface{ Pipeline() error }); ok {
 
 			if err := v.Pipeline(); err != nil {
-				return ExamplePipelineError{
+				return StringTrimExamplePipelineError{
 					field:  "Inner",
 					reason: "embedded message failed pipeline",
 					cause:  err,
@@ -67,9 +135,9 @@ func (m *Example) Pipeline() error {
 	return nil
 }
 
-// ExamplePipelineError is the pipeline error returned by Example.Pipeline if
-// the designated constraints aren't met.
-type ExamplePipelineError struct {
+// StringTrimExamplePipelineError is the pipeline error returned by
+// StringTrimExample.Pipeline if the designated constraints aren't met.
+type StringTrimExamplePipelineError struct {
 	field  string
 	reason string
 	cause  error
@@ -77,22 +145,22 @@ type ExamplePipelineError struct {
 }
 
 // Field function returns field value.
-func (e ExamplePipelineError) Field() string { return e.field }
+func (e StringTrimExamplePipelineError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ExamplePipelineError) Reason() string { return e.reason }
+func (e StringTrimExamplePipelineError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ExamplePipelineError) Cause() error { return e.cause }
+func (e StringTrimExamplePipelineError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ExamplePipelineError) Key() bool { return e.key }
+func (e StringTrimExamplePipelineError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ExamplePipelineError) ErrorName() string { return "ExamplePipelineError" }
+func (e StringTrimExamplePipelineError) ErrorName() string { return "StringTrimExamplePipelineError" }
 
 // Error satisfies the builtin error interface
-func (e ExamplePipelineError) Error() string {
+func (e StringTrimExamplePipelineError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -104,14 +172,14 @@ func (e ExamplePipelineError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExample.%s: %s%s",
+		"invalid %sStringTrimExample.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ExamplePipelineError{}
+var _ error = StringTrimExamplePipelineError{}
 
 var _ interface {
 	Field() string
@@ -119,9 +187,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ExamplePipelineError{}
+} = StringTrimExamplePipelineError{}
 
-func (m *RemoveExample) Pipeline() error {
+func (m *StringRemoveExample) Pipeline() error {
 	if m == nil {
 		return nil
 	}
@@ -131,9 +199,9 @@ func (m *RemoveExample) Pipeline() error {
 	return nil
 }
 
-// RemoveExamplePipelineError is the pipeline error returned by
-// RemoveExample.Pipeline if the designated constraints aren't met.
-type RemoveExamplePipelineError struct {
+// StringRemoveExamplePipelineError is the pipeline error returned by
+// StringRemoveExample.Pipeline if the designated constraints aren't met.
+type StringRemoveExamplePipelineError struct {
 	field  string
 	reason string
 	cause  error
@@ -141,22 +209,24 @@ type RemoveExamplePipelineError struct {
 }
 
 // Field function returns field value.
-func (e RemoveExamplePipelineError) Field() string { return e.field }
+func (e StringRemoveExamplePipelineError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e RemoveExamplePipelineError) Reason() string { return e.reason }
+func (e StringRemoveExamplePipelineError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e RemoveExamplePipelineError) Cause() error { return e.cause }
+func (e StringRemoveExamplePipelineError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e RemoveExamplePipelineError) Key() bool { return e.key }
+func (e StringRemoveExamplePipelineError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e RemoveExamplePipelineError) ErrorName() string { return "RemoveExamplePipelineError" }
+func (e StringRemoveExamplePipelineError) ErrorName() string {
+	return "StringRemoveExamplePipelineError"
+}
 
 // Error satisfies the builtin error interface
-func (e RemoveExamplePipelineError) Error() string {
+func (e StringRemoveExamplePipelineError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -168,14 +238,14 @@ func (e RemoveExamplePipelineError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sRemoveExample.%s: %s%s",
+		"invalid %sStringRemoveExample.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = RemoveExamplePipelineError{}
+var _ error = StringRemoveExamplePipelineError{}
 
 var _ interface {
 	Field() string
@@ -183,9 +253,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = RemoveExamplePipelineError{}
+} = StringRemoveExamplePipelineError{}
 
-func (m *ReplaceExample) Pipeline() error {
+func (m *StringReplaceExample) Pipeline() error {
 	if m == nil {
 		return nil
 	}
@@ -195,9 +265,9 @@ func (m *ReplaceExample) Pipeline() error {
 	return nil
 }
 
-// ReplaceExamplePipelineError is the pipeline error returned by
-// ReplaceExample.Pipeline if the designated constraints aren't met.
-type ReplaceExamplePipelineError struct {
+// StringReplaceExamplePipelineError is the pipeline error returned by
+// StringReplaceExample.Pipeline if the designated constraints aren't met.
+type StringReplaceExamplePipelineError struct {
 	field  string
 	reason string
 	cause  error
@@ -205,22 +275,24 @@ type ReplaceExamplePipelineError struct {
 }
 
 // Field function returns field value.
-func (e ReplaceExamplePipelineError) Field() string { return e.field }
+func (e StringReplaceExamplePipelineError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e ReplaceExamplePipelineError) Reason() string { return e.reason }
+func (e StringReplaceExamplePipelineError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e ReplaceExamplePipelineError) Cause() error { return e.cause }
+func (e StringReplaceExamplePipelineError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e ReplaceExamplePipelineError) Key() bool { return e.key }
+func (e StringReplaceExamplePipelineError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e ReplaceExamplePipelineError) ErrorName() string { return "ReplaceExamplePipelineError" }
+func (e StringReplaceExamplePipelineError) ErrorName() string {
+	return "StringReplaceExamplePipelineError"
+}
 
 // Error satisfies the builtin error interface
-func (e ReplaceExamplePipelineError) Error() string {
+func (e StringReplaceExamplePipelineError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -232,14 +304,14 @@ func (e ReplaceExamplePipelineError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sReplaceExample.%s: %s%s",
+		"invalid %sStringReplaceExample.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = ReplaceExamplePipelineError{}
+var _ error = StringReplaceExamplePipelineError{}
 
 var _ interface {
 	Field() string
@@ -247,9 +319,9 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = ReplaceExamplePipelineError{}
+} = StringReplaceExamplePipelineError{}
 
-func (m *Example_Inner) Pipeline() error {
+func (m *StringTrimExample_Inner) Pipeline() error {
 	if m == nil {
 		return nil
 	}
@@ -275,7 +347,7 @@ func (m *Example_Inner) Pipeline() error {
 		if v, ok := interface{}(tmp).(interface{ Pipeline() error }); ok {
 
 			if err := v.Pipeline(); err != nil {
-				return Example_InnerPipelineError{
+				return StringTrimExample_InnerPipelineError{
 					field:  "Inner",
 					reason: "embedded message failed pipeline",
 					cause:  err,
@@ -287,9 +359,9 @@ func (m *Example_Inner) Pipeline() error {
 	return nil
 }
 
-// Example_InnerPipelineError is the pipeline error returned by
-// Example_Inner.Pipeline if the designated constraints aren't met.
-type Example_InnerPipelineError struct {
+// StringTrimExample_InnerPipelineError is the pipeline error returned by
+// StringTrimExample_Inner.Pipeline if the designated constraints aren't met.
+type StringTrimExample_InnerPipelineError struct {
 	field  string
 	reason string
 	cause  error
@@ -297,22 +369,24 @@ type Example_InnerPipelineError struct {
 }
 
 // Field function returns field value.
-func (e Example_InnerPipelineError) Field() string { return e.field }
+func (e StringTrimExample_InnerPipelineError) Field() string { return e.field }
 
 // Reason function returns reason value.
-func (e Example_InnerPipelineError) Reason() string { return e.reason }
+func (e StringTrimExample_InnerPipelineError) Reason() string { return e.reason }
 
 // Cause function returns cause value.
-func (e Example_InnerPipelineError) Cause() error { return e.cause }
+func (e StringTrimExample_InnerPipelineError) Cause() error { return e.cause }
 
 // Key function returns key value.
-func (e Example_InnerPipelineError) Key() bool { return e.key }
+func (e StringTrimExample_InnerPipelineError) Key() bool { return e.key }
 
 // ErrorName returns error name.
-func (e Example_InnerPipelineError) ErrorName() string { return "Example_InnerPipelineError" }
+func (e StringTrimExample_InnerPipelineError) ErrorName() string {
+	return "StringTrimExample_InnerPipelineError"
+}
 
 // Error satisfies the builtin error interface
-func (e Example_InnerPipelineError) Error() string {
+func (e StringTrimExample_InnerPipelineError) Error() string {
 	cause := ""
 	if e.cause != nil {
 		cause = fmt.Sprintf(" | caused by: %v", e.cause)
@@ -324,14 +398,14 @@ func (e Example_InnerPipelineError) Error() string {
 	}
 
 	return fmt.Sprintf(
-		"invalid %sExample_Inner.%s: %s%s",
+		"invalid %sStringTrimExample_Inner.%s: %s%s",
 		key,
 		e.field,
 		e.reason,
 		cause)
 }
 
-var _ error = Example_InnerPipelineError{}
+var _ error = StringTrimExample_InnerPipelineError{}
 
 var _ interface {
 	Field() string
@@ -339,4 +413,4 @@ var _ interface {
 	Key() bool
 	Cause() error
 	ErrorName() string
-} = Example_InnerPipelineError{}
+} = StringTrimExample_InnerPipelineError{}
