@@ -35,10 +35,10 @@ func (m *Module) CheckRules(msg pgs.Message) {
 		_, err := f.Extension(pipeline.E_Processes, &rules)
 		m.CheckErr(err, "unable to read validation rules from field")
 
-		//if rules.GetMessage() != nil {
-		//	m.MustType(f.Type(), pgs.MessageT, pgs.UnknownWKT)
-		//	m.CheckMessage(f, &rules)
-		//}
+		if rules.GetMessage() != nil {
+			m.MustType(f.Type(), pgs.MessageT, pgs.UnknownWKT)
+			m.CheckMessage(f, &rules)
+		}
 
 		m.CheckFieldRules(f.Type(), &rules)
 
@@ -105,6 +105,25 @@ func (m *Module) CheckString(r *pipeline.StringProcesses) {
 	//	m.Assert(len(r.GetSuffix()) <= max, "`suffix` length exceeds the `max_bytes`")
 	//	m.Assert(len(r.GetContains()) <= max, "`contains` length exceeds the `max_bytes`")
 	//}
+}
+
+func (m *Module) CheckMessage(f pgs.Field, rules *pipeline.FieldProcesses) {
+	m.Assert(f.Type().IsEmbed(), "field is not embedded but got message rules")
+	emb := f.Type().Embed()
+	if emb != nil && emb.IsWellKnown() {
+		switch emb.WellKnownType() {
+		case pgs.AnyWKT:
+			m.Failf("Any rules should be used for Any fields")
+		case pgs.DurationWKT:
+			m.Failf("Duration rules should be used for Duration fields")
+		case pgs.TimestampWKT:
+			m.Failf("Timestamp rules should be used for Timestamp fields")
+		}
+	}
+
+	if rules.Type != nil && rules.GetMessage().GetSkip() {
+		m.Failf("Skip should not be used with WKT scalar rules")
+	}
 }
 
 func (m *Module) CheckRepeated(ft FieldType, r *pipeline.RepeatedProcesses) {
