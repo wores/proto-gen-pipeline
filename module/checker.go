@@ -1,6 +1,8 @@
 package module
 
 import (
+	"unicode/utf8"
+
 	pgs "github.com/lyft/protoc-gen-star"
 
 	"github.com/wores/protoc-gen-pipeline/pipeline"
@@ -85,6 +87,9 @@ func (m *Module) MustType(typ FieldType, pt pgs.ProtoType, wrapper pgs.WellKnown
 }
 
 func (m *Module) CheckString(r *pipeline.StringProcesses) {
+	if r.Omission != nil {
+		m.Assert(*r.Omission.Len > uint64(utf8.RuneCountInString(*r.Omission.Replace) + 3), "`replace` length exceeds the `len`")
+	}
 	//if r.MaxLen != nil {
 	//	max := int(r.GetMaxLen())
 	//	m.Assert(utf8.RuneCountInString(r.GetPrefix()) <= max, "`prefix` length exceeds the `max_len`")

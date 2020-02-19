@@ -40,6 +40,15 @@ func (m *StringAllExample) Pipeline() error {
 
 	m.Text = strings.ReplaceAll(m.GetText(), "'", "\"")
 
+	if utf8.RuneCountInString(m.GetText()) > 10 {
+		runes := []rune(m.GetText())
+		replace := "[-]"
+		lenExcludeReplace := 10 - utf8.RuneCountInString(replace)
+
+		l := len(runes) - lenExcludeReplace
+		m.Text = replace + string(runes[l:])
+	}
+
 	return nil
 }
 
@@ -320,6 +329,101 @@ var _ interface {
 	Cause() error
 	ErrorName() string
 } = StringReplaceExamplePipelineError{}
+
+func (m *StringOmissionExample) Pipeline() error {
+	if m == nil {
+		return nil
+	}
+
+	if utf8.RuneCountInString(m.GetLeft()) > 10 {
+		runes := []rune(m.GetLeft())
+		replace := "…"
+		lenExcludeReplace := 10 - utf8.RuneCountInString(replace)
+
+		l := len(runes) - lenExcludeReplace
+		m.Left = replace + string(runes[l:])
+	}
+
+	if utf8.RuneCountInString(m.GetCenter()) > 10 {
+		runes := []rune(m.GetCenter())
+		replace := "…"
+		lenExcludeReplace := 10 - utf8.RuneCountInString(replace)
+
+		lenLeft := lenExcludeReplace / 2
+		lenRight := lenLeft
+		if lenExcludeReplace%2 != 0 {
+			lenLeft += 1
+		}
+		rightStart := len(runes) - lenRight
+		m.Center = fmt.Sprintf("%s%s%s", string(runes[0:lenLeft]), replace, string(runes[rightStart:]))
+	}
+
+	if utf8.RuneCountInString(m.GetRight()) > 10 {
+		runes := []rune(m.GetRight())
+		replace := "…"
+		lenExcludeReplace := 10 - utf8.RuneCountInString(replace)
+
+		m.Right = string(runes[:lenExcludeReplace]) + replace
+	}
+
+	return nil
+}
+
+// StringOmissionExamplePipelineError is the pipeline error returned by
+// StringOmissionExample.Pipeline if the designated constraints aren't met.
+type StringOmissionExamplePipelineError struct {
+	field  string
+	reason string
+	cause  error
+	key    bool
+}
+
+// Field function returns field value.
+func (e StringOmissionExamplePipelineError) Field() string { return e.field }
+
+// Reason function returns reason value.
+func (e StringOmissionExamplePipelineError) Reason() string { return e.reason }
+
+// Cause function returns cause value.
+func (e StringOmissionExamplePipelineError) Cause() error { return e.cause }
+
+// Key function returns key value.
+func (e StringOmissionExamplePipelineError) Key() bool { return e.key }
+
+// ErrorName returns error name.
+func (e StringOmissionExamplePipelineError) ErrorName() string {
+	return "StringOmissionExamplePipelineError"
+}
+
+// Error satisfies the builtin error interface
+func (e StringOmissionExamplePipelineError) Error() string {
+	cause := ""
+	if e.cause != nil {
+		cause = fmt.Sprintf(" | caused by: %v", e.cause)
+	}
+
+	key := ""
+	if e.key {
+		key = "key for "
+	}
+
+	return fmt.Sprintf(
+		"invalid %sStringOmissionExample.%s: %s%s",
+		key,
+		e.field,
+		e.reason,
+		cause)
+}
+
+var _ error = StringOmissionExamplePipelineError{}
+
+var _ interface {
+	Field() string
+	Reason() string
+	Key() bool
+	Cause() error
+	ErrorName() string
+} = StringOmissionExamplePipelineError{}
 
 func (m *StringTrimExample_Inner) Pipeline() error {
 	if m == nil {

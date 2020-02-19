@@ -1,7 +1,7 @@
 version: '2'
 
 tasks:
-  protogen:
+  gogen:
     desc: Generate pb files.
     cmds:
       - prototool format -w ./{{ .DIR }}
@@ -11,7 +11,7 @@ tasks:
     vars:
       DIR: pipeline
 
-  try:
+  examplegen:
     desc: Generate pb files.
     cmds:
       - go build -o protoc-gen-pipeline main.go
@@ -25,7 +25,7 @@ tasks:
     vars:
       DIR: example
 
-  hoge:
+  gogogen:
     desc: Generate pb files.
     cmds:
       - prototool format -w ./{{ .DIR }}

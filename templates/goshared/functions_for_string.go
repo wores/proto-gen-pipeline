@@ -9,22 +9,23 @@ import (
 
 type goSharedStringFuncs struct{ goSharedFuncs }
 
-func (fns goSharedStringFuncs) trim(ctx shared.RuleContext, trimType pipeline.TrimType) string {
-	genStatement := func(trimType string) string {
+// テンプレート内で描画したかったが、trimTypeの比較方法が見つけられなかったためこの中で行っている。
+func (fns goSharedStringFuncs) trim(ctx shared.RuleContext, trimType pipeline.Trim) string {
+	fnGenStatement := func(position string) string {
 		statementFormat := "%s = strings.Trim%sFunc(%s, func(r rune) bool { return unicode.IsSpace(r) })"
-		return fmt.Sprintf(statementFormat, fns.property(ctx), trimType, fns.accessor(ctx))
+		return fmt.Sprintf(statementFormat, fns.property(ctx), position, fns.accessor(ctx))
 	}
 
 	switch trimType {
 
-	case pipeline.TrimType_TrimTypeBoth:
-		return genStatement("")
+	case pipeline.Trim_TrimBoth:
+		return fnGenStatement("")
 
-	case pipeline.TrimType_TrimTypeLeft:
-		return genStatement("Left")
+	case pipeline.Trim_TrimLeft:
+		return fnGenStatement("Left")
 
-	case pipeline.TrimType_TrimTypeRight:
-		return genStatement("Right")
+	case pipeline.Trim_TrimRight:
+		return fnGenStatement("Right")
 
 	default:
 		panic(fmt.Sprintf("TrimType %d is not exist", trimType))
@@ -32,3 +33,14 @@ func (fns goSharedStringFuncs) trim(ctx shared.RuleContext, trimType pipeline.Tr
 
 }
 
+func (fns goSharedStringFuncs) isOmissionPositionLeft(position pipeline.OmissionPosition) bool {
+	return position == pipeline.OmissionPosition_OmissionPositionLeft
+}
+
+func (fns goSharedStringFuncs) isOmissionPositionCenter(position pipeline.OmissionPosition) bool {
+	return position == pipeline.OmissionPosition_OmissionPositionCenter
+}
+
+func (fns goSharedStringFuncs) isOmissionPositionRight(position pipeline.OmissionPosition) bool {
+	return position == pipeline.OmissionPosition_OmissionPositionRight
+}

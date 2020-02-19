@@ -10,63 +10,56 @@ import "pipeline/pipeline.proto";
 message StringAllExample {
   string text = 1 [
     (pipeline.processes).string = {
-      trim: TrimTypeBoth
-      remove: "q"
+      trim: TrimBoth
+      remove_all: "q"
       replace: {
         old: "'"
         new: "\\\""
+      }
+      omission: {
+        len: 10
+        replace: "[-]"
+        position: OmissionPositionLeft
       }
     }
   ];
 }
 
 message StringTrimExample {
-  string text = 1 [(pipeline.processes).string.trim = TrimTypeLeft];
+  string text = 1 [(pipeline.processes).string.trim = TrimLeft];
   google.protobuf.StringValue wrapText = 2 [
     (pipeline.processes).string = {
-      trim: TrimTypeBoth
+      trim: TrimBoth
     }
   ];
   repeated string texts = 3 [
     (pipeline.processes).repeated.items.string = {
-      trim: TrimTypeBoth
+      trim: TrimBoth
     }
   ];
   message Inner {
     string text = 1 [
       (pipeline.processes).string = {
-        trim: TrimTypeRight
+        trim: TrimRight
       }
     ];
     google.protobuf.StringValue wrapText = 2 [
       (pipeline.processes).string = {
-        trim: TrimTypeBoth
+        trim: TrimBoth
       }
     ];
     repeated string texts = 3 [
       (pipeline.processes).repeated.items.string = {
-        trim: TrimTypeBoth
+        trim: TrimBoth
       }
     ];
     Inner inner = 4;
   }
   Inner inner = 4;
-  //  string trimStr = 3 [(pipeline.processes).string.trim = true];
-  //  google.protobuf.StringValue wrapTrimStr = 4 [(pipeline.processes).string.trim = true];
-  //    string with_new_multiple = 2 [(tagger.tags) = "graphql:\"withNewTags,optional\" xml:\"multi,omitempty\"" ];
-
-  //    string replace_default = 3 [(tagger.tags) = "json:\"replacePrevious\""] ;
-
-  //    oneof one_of {
-  //        option (tagger.oneof_tags) = "graphql:\"withNewTags,optional\"";
-  //        string a = 5 [(tagger.tags) = "json:\"A\""];
-  //        int32 b_jk = 6 [(tagger.tags) = "json:\"b_Jk\""];
-  //    }
-
 }
 
 message StringRemoveExample {
-  string text = 1 [(pipeline.processes).string.remove = "-"];
+  string text = 1 [(pipeline.processes).string.remove_all = "-"];
 }
 
 message StringReplaceExample {
@@ -75,6 +68,36 @@ message StringReplaceExample {
       replace: {
         old: "*"
         new: "%"
+      }
+    }
+  ];
+}
+
+message StringOmissionExample {
+  string left = 1 [
+    (pipeline.processes).string = {
+      omission: {
+        len: 10
+        replace: "…"
+        position: OmissionPositionLeft
+      }
+    }
+  ];
+  string center = 2 [
+    (pipeline.processes).string = {
+      omission: {
+        len: 10
+        replace: "…"
+        position: OmissionPositionCenter
+      }
+    }
+  ];
+  string right = 3 [
+    (pipeline.processes).string = {
+      omission: {
+        len: 10
+        replace: "…"
+        position: OmissionPositionRight
       }
     }
   ];

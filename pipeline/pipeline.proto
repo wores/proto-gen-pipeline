@@ -10,6 +10,7 @@ extend google.protobuf.FieldOptions {
   optional FieldProcesses processes = 27063;
 }
 
+// FieldProcesses はFieldの定義。
 message FieldProcesses {
   optional MessageProcesses message = 1;
   oneof type {
@@ -18,37 +19,63 @@ message FieldProcesses {
   }
 }
 
+// StringProcesses は文字列の処理の定義。
 message StringProcesses {
   // トリムする。
-  optional TrimType trim = 1;
+  optional Trim trim = 1;
   // 指定した文字を削除する。
-  // TODO: 配列で指定できるように対応する。
-  optional string remove = 2;
+  optional string remove_all = 2;
   // 指定した文字を指定した文字へリプレイスする。
-  // TODO: 配列で指定できるように対応する。
   optional StringReplace replace = 3;
+  // 指定した文字以内で省略する。
+  optional StringOmission omission = 4;
 }
 
+// StringReplace は文字列の置換処理の定義。
 message StringReplace {
+  // 置換前の文字。
   required string old = 1;
+  // 置換後の文字。
   required string new = 2;
 }
 
+// StringOmission は文字列の省略の定義。
+message StringOmission {
+  // (replaceの文字数+3)以上の値を設定すること。
+  required uint64 len = 1;
+  // 置換する文字。
+  required string replace = 2;
+  // 省略する位置。
+  required OmissionPosition position = 3;
+}
+
+// RepeatedProcesses は配列の処理の定義。
 message RepeatedProcesses {
   optional FieldProcesses items = 1;
 }
 
+// MessageProcesses はmessageの処理の定義。
 message MessageProcesses {
   // 処理をskipする。
   optional bool skip = 1;
 }
 
 // TrimType はトリムの定義。
-enum TrimType {
+enum Trim {
   // 両サイドをトリムする。
-  TrimTypeBoth = 1;
+  TrimBoth = 1;
   // 左サイドをトリムする。
-  TrimTypeLeft = 2;
+  TrimLeft = 2;
   // 右サイドをトリムする。
-  TrimTypeRight = 3;
+  TrimRight = 3;
+}
+
+// OmissionPosition は省略する位置の定義。
+enum OmissionPosition {
+  // 先頭を省略する。
+  OmissionPositionLeft = 1;
+  // 中央を省略する。
+  OmissionPositionCenter = 2;
+  // 末尾を省略する。
+  OmissionPositionRight = 3;
 }

@@ -36,7 +36,10 @@ func Register(tpl *template.Template, params pgs.Parameters) {
 	})
 
 	funcsForString := map[string]interface{}{
-		"trim":        fnsForString.trim,
+		"trim":                     fnsForString.trim,
+		"isOmissionPositionLeft":   fnsForString.isOmissionPositionLeft,
+		"isOmissionPositionCenter": fnsForString.isOmissionPositionCenter,
+		"isOmissionPositionRight":  fnsForString.isOmissionPositionRight,
 	}
 
 	template.Must(tpl.New("msg").Parse(msgTpl))
